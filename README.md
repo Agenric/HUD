@@ -1,4 +1,4 @@
-# HUD
+# AGHUD
 
 [![CI Status](https://img.shields.io/travis/AgenricWon/HUD.svg?style=flat)](https://travis-ci.org/AgenricWon/HUD)
 [![Version](https://img.shields.io/cocoapods/v/HUD.svg?style=flat)](https://cocoapods.org/pods/HUD)
@@ -17,7 +17,7 @@ HUD is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'HUD'
+pod 'AGHUD'
 ```
 
 ## Author
