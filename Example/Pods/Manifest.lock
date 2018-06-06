@@ -1,0 +1,23 @@
+PODS:
+  - HUD (0.1.2):
+    - SnapKit (~> 4.0.0)
+  - SnapKit (4.0.0)
+
+DEPENDENCIES:
+  - HUD (from `../`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - SnapKit
+
+EXTERNAL SOURCES:
+  HUD:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  HUD: 39b595198d0ed10fc193bd4a57ba23eb84ebf549
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+
+PODFILE CHECKSUM: ba4e33aeb7838ff9cf00ee8efe955c2b1b3248c5
+
+COCOAPODS: 1.5.0
