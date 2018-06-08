@@ -1,7 +1,7 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## HUD
+## AGHUD
 
 Copyright (c) 2018 AgenricWon <AgenricWon@gmail.com>
 

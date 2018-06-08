@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double HUDVersionNumber;
-FOUNDATION_EXPORT const unsigned char HUDVersionString[];
+FOUNDATION_EXPORT double AGHUDVersionNumber;
+FOUNDATION_EXPORT const unsigned char AGHUDVersionString[];
 
