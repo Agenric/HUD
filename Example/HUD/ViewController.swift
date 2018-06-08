@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import HUD
+import AGHUD
 
 class ViewController: UIViewController {
 
@@ -27,12 +27,18 @@ class ViewController: UIViewController {
     @IBAction func Loading(_ sender: Any) {
         
 //        let hud = HUD.showLoading("Loading-Message")
-        let hud = HUD.showLoading("Loading-Message") { (hud) in
+        
+        
+        let hud = HUD.showLoading("LoadingMessageLoadingMessageLoadingMessageLoadingMessage") { (hud) in
             print("show complete")
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            hud?.dismiss({
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            hud?.message = "sadsada"
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            hud?.hideCompletion({
                 print("dismiss complete")
             })
         }

@@ -1,5 +1,5 @@
 import XCTest
-import HUD
+import AGHUD
 
 class Tests: XCTestCase {
     

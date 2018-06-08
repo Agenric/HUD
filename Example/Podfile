@@ -1,7 +1,7 @@
 use_frameworks!
 
 target 'HUD_Example' do
-  pod 'HUD', :path => '../'
+  pod 'AGHUD', :path => '../'
 
   target 'HUD_Tests' do
     inherit! :search_paths
