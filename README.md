@@ -1,9 +1,9 @@
 # AGHUD
 
 [![CI Status](https://img.shields.io/travis/Agenric/HUD.svg?style=flat)](https://travis-ci.org/Agenric/HUD)
-[![Version](https://img.shields.io/cocoapods/v/HUD.svg?style=flat)](https://cocoapods.org/pods/HUD)
-[![License](https://img.shields.io/cocoapods/l/HUD.svg?style=flat)](https://cocoapods.org/pods/HUD)
-[![Platform](https://img.shields.io/cocoapods/p/HUD.svg?style=flat)](https://cocoapods.org/pods/HUD)
+[![Version](https://img.shields.io/cocoapods/v/AGHUD.svg?style=flat)](https://cocoapods.org/pods/AGHUD)
+[![License](https://img.shields.io/cocoapods/l/AGHUD.svg?style=flat)](https://cocoapods.org/pods/AGHUD)
+[![Platform](https://img.shields.io/cocoapods/p/AGHUD.svg?style=flat)](https://cocoapods.org/pods/AGHUD)
 
 ## Example
 
