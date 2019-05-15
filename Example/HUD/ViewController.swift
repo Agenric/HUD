@@ -16,10 +16,13 @@ class ViewController: UIViewController {
         
     }
     @IBAction func Toast(_ sender: Any) {
-        HUD.show("Toast-Message") {
+//        HUD.show("Toast-Message") {
+//            print("Toast callback")
+//        }
+        
+        HUD.show("NEW-TOAST-MESSAGE", in: view, duration: 7) {
             print("Toast callback")
         }
-        
 //        HUD.dismiss()
     }
     
@@ -29,16 +32,17 @@ class ViewController: UIViewController {
 //        let hud = HUD.showLoading("Loading-Message")
         
         
-        let hud = HUD.showLoading("LoadingMessageLoadingMessageLoadingMessageLoadingMessage") { (hud) in
+        let hud = HUD.showLoading("LoadingMessageLoadingMessageLoadingMessageLoadingMeeLoadingMeeLoadingMeeLoadingMessage") { (hud) in
             print("show complete")
         }
+        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             hud?.message = "sadsada"
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            hud?.hideCompletion({
+            hud?.hide({
                 print("dismiss complete")
             })
         }

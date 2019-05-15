@@ -19,7 +19,7 @@ private enum HUDType {
     case loading
 }
 
-let DefaultInterval: TimeInterval = 3
+public let DefaultInterval: TimeInterval = 3
 
 @objcMembers
 public class HUD: UIView {
@@ -89,6 +89,7 @@ public class HUD: UIView {
             activityImageView.snp.makeConstraints({ (make) in
                 make.left.equalTo(15)
                 make.centerY.equalToSuperview()
+                make.size.equalTo(CGSize(width: 30, height: 30))
                 make.top.greaterThanOrEqualToSuperview().offset(10)
                 make.bottom.lessThanOrEqualToSuperview().offset(-10)
             })
@@ -108,13 +109,9 @@ public class HUD: UIView {
     }
     
     // Private
-    private class func hasHUDDisplay(in view: UIView?) -> Bool {
-        var targetView: UIView = UIWindow.keyWindow()
-        if view != nil {
-            targetView = view!
-        }
+    private class func hasHUDDisplaying(in view: UIView) -> Bool {
         var flag = false
-        targetView.subviews.forEach { (sub) in
+        view.subviews.forEach { (sub) in
             if sub.isKind(of: HUD.self) {
                 flag = true
             }
@@ -122,12 +119,8 @@ public class HUD: UIView {
         return flag
     }
     
-    private func show(in view: UIView?) {
-        var targetView: UIView = UIWindow.keyWindow()
-        if view != nil {
-            targetView = view!
-        }
-        targetView.addSubview(self)
+    private func show(in view: UIView) {
+        view.addSubview(self)
         self.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
@@ -135,75 +128,6 @@ public class HUD: UIView {
     
     
     // Toast
-    @discardableResult
-    public static func show(_ message: String) -> HUD? {
-        return HUD.show(message, in: nil, position: .center, duration: DefaultInterval, completion: nil)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, in view: UIView?) -> HUD? {
-        return HUD.show(message, in: view, position: .center, duration: DefaultInterval, completion: nil)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, position: HUDPosition) -> HUD? {
-        return HUD.show(message, in: nil, position: position, duration: DefaultInterval, completion: nil)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, duration: TimeInterval) -> HUD? {
-        return HUD.show(message, in: nil, position: .center, duration: duration, completion: nil)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, completion: (() -> Void)?) -> HUD? {
-        return HUD.show(message, in: nil, position: .center, duration: DefaultInterval, completion: completion)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, in view: UIView?, position: HUDPosition) -> HUD? {
-        return HUD.show(message, in: view, position: position, duration: DefaultInterval, completion: nil)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, in view: UIView?, duration: TimeInterval) -> HUD? {
-        return HUD.show(message, in: view, position: .center, duration: duration, completion: nil)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, in view: UIView?, completion: (() -> Void)?) -> HUD? {
-        return HUD.show(message, in: view, position: .center, duration: DefaultInterval, completion: completion)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, in view: UIView?, position: HUDPosition, completion: (() -> Void)?) -> HUD? {
-        return HUD.show(message, in: view, position: position, duration: DefaultInterval, completion: completion)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, in view: UIView?, duration: TimeInterval, completion: (() -> Void)?) -> HUD? {
-        return HUD.show(message, in: view, position: .center, duration: duration, completion: completion)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, position: HUDPosition, duration: TimeInterval) -> HUD? {
-        return HUD.show(message, in: nil, position: position, duration: duration, completion: nil)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, position: HUDPosition, completion: (() -> Void)?) -> HUD? {
-        return HUD.show(message, in: nil, position: position, duration: DefaultInterval, completion: completion)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, position: HUDPosition, duration: TimeInterval, completion: (() -> Void)?) -> HUD? {
-        return HUD.show(message, in: nil, position: position, duration: duration, completion: completion)
-    }
-    
-    @discardableResult
-    public static func show(_ message: String, duration: TimeInterval, completion: (() -> Void)?) -> HUD? {
-        return HUD.show(message, in: nil, position: .center, duration: duration, completion: completion)
-    }
     
     /// 弹出即时消息提示框
     ///
@@ -215,8 +139,8 @@ public class HUD: UIView {
     ///   - completion: 显示完成之后的回调
     /// - Returns: 如果当前有正在显示的HUD，会返回nil
     @discardableResult
-    public static func show(_ message: String, in view: UIView?, position: HUDPosition, duration: TimeInterval, completion: (() -> Void)?) -> HUD? {
-        if hasHUDDisplay(in: view) {
+    public static func show(_ message: String, in view: UIView = UIWindow.keyWindow(), position: HUDPosition = .center , duration: TimeInterval = DefaultInterval, completion: (() -> Void)?) -> HUD? {
+        if hasHUDDisplaying(in: view) {
             return nil
         }
         let hud = HUD.init(message, type: .toast, posi: position)
@@ -226,52 +150,24 @@ public class HUD: UIView {
             hud.contentView.alpha = 1
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            hud.hideCompletion(completion)
+            hud.hide(completion)
         }
         return hud
     }
     
     
     // Loading
-    public static func showLoading(_ message: String) -> HUD? {
-        return showLoading(message, in: nil, position: .center, ready: nil)
-    }
     
-    public static func showLoading(_ message: String, in view: UIView?) -> HUD? {
-        return showLoading(message, in: view, position: .center, ready: nil)
-    }
-    
-    public static func showLoading(_ message: String, position: HUDPosition) -> HUD? {
-        return showLoading(message, in: nil, position: position, ready: nil)
-    }
-    
-    public static func showLoading(_ message: String, ready: ((_ hud: HUD?) -> Void)?) -> HUD? {
-        return showLoading(message, in: nil, position: .center, ready: ready)
-    }
-    
-    public static func showLoading(_ message: String, in view: UIView?, position: HUDPosition) -> HUD? {
-        return showLoading(message, in: view, position: position, ready: nil)
-    }
-    
-    public static func showLoading(_ message: String, in view: UIView?, ready: ((_ hud: HUD?) -> Void)?) -> HUD? {
-        return showLoading(message, in: view, position: .center, ready: ready)
-    }
-    
-    public static func showLoading(_ message: String, position: HUDPosition, ready: ((_ hud: HUD?) -> Void)?) -> HUD? {
-        return showLoading(message, in: nil, position: position, ready: ready)
-    }
-    
-    /**
-     弹出持续消息提示框
-     
-     @param message 提示消息
-     @param view 将要加载到的目标View：默认加载在keyWindow上
-     @param position 显示的位置：默认居中显示在目标view上
-     @param ready 开始显示之后的回调
-     @return self：如果当前有正在显示的HUD，会返回nil
-     */
-    public static func showLoading(_ message: String, in view: UIView?, position: HUDPosition, ready: ((_ hud: HUD?) -> Void)?) -> HUD? {
-        if hasHUDDisplay(in: view) {
+    /// 弹出持续消息提示框
+    ///
+    /// - Parameters:
+    ///   - message: 提示消息
+    ///   - view: 将要加载到的目标View：默认加载在keyWindow上
+    ///   - position: 显示的位置：默认居中显示在目标view上
+    ///   - ready: 开始显示之后的回调
+    /// - Returns: 如果当前有正在显示的HUD，会返回nil
+    public static func showLoading(_ message: String, in view: UIView = UIWindow.keyWindow(), position: HUDPosition = .center, ready: ((_ hud: HUD?) -> Void)?) -> HUD? {
+        if hasHUDDisplaying(in: view) {
             return nil
         }
         let hud = HUD.init(message, type: .loading, posi: position)
@@ -286,19 +182,7 @@ public class HUD: UIView {
     
     
     // Hide
-    public func hide() {
-        hideForm(nil, completion: nil)
-    }
-    
-    public func hideForm(_ view: UIView?) {
-        hideForm(view, completion: nil)
-    }
-    
-    public func hideCompletion(_ completion: (() -> Void)?) {
-        hideForm(nil, completion: completion)
-    }
-    
-    public func hideForm(_ view: UIView?, completion: (() -> Void)?) {
+    public func hide(_ completion: (() -> Void)?) {
         UIView.animate(withDuration: 0.3, animations: {
             self.contentView.alpha = 0
         }) { _ in
@@ -307,26 +191,10 @@ public class HUD: UIView {
         }
     }
     
-    public static func hide() {
-        hideForm(nil, completion: nil)
-    }
-    
-    public static func hideForm(_ view: UIView?) {
-        hideForm(view, completion: nil)
-    }
-    
-    public static func hideCompletion(_ completion: (() -> Void)?) {
-        hideForm(nil, completion: completion)
-    }
-    
-    public static func hideForm(_ view: UIView?, completion: (() -> Void)?) {
-        var targetView: UIView = UIWindow.keyWindow()
-        if view != nil {
-            targetView = view!
-        }
-        _ = targetView.subviews.map {
+    public static func hide(_ fromView: UIView = UIWindow.keyWindow(), completion: (() -> Void)?) {
+        _ = fromView.subviews.map {
             if let hud = $0 as? HUD {
-                hud.hideForm(targetView, completion: completion)
+                hud.hide(completion)
             }
         }
     }
