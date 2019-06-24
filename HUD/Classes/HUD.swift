@@ -103,7 +103,7 @@ public class HUD: UIView {
             })
         } else {
             messageLabel.snp.makeConstraints({ (make) in
-                make.edges.equalTo(UIEdgeInsetsMake(10, 15, 10, 15))
+                make.edges.equalTo(UIEdgeInsets.init(top: 10, left: 15, bottom: 10, right: 15))
             })
         }
     }

@@ -36,13 +36,13 @@ extension UIColor {
 }
 
 public extension UIWindow {
-    public class func keyWindow() -> UIWindow {
+    class func keyWindow() -> UIWindow {
         var keyWindow: UIWindow?
         let frontToBackWindows = UIApplication.shared.windows
         for window: UIWindow in frontToBackWindows {
             let windowOnMainScreen: Bool = window.screen == UIScreen.main
             let windowIsVisible: Bool = !window.isHidden && window.alpha > 0
-            let windowLevelNormal: Bool = window.windowLevel == UIWindowLevelNormal
+            let windowLevelNormal: Bool = window.windowLevel == UIWindow.Level.normal
             if windowOnMainScreen && windowIsVisible && windowLevelNormal {
                 keyWindow = window
                 break
