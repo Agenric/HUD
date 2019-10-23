@@ -1,5 +1,5 @@
 PODS:
-  - AGHUD (1.0.0):
+  - AGHUD (1.1.0):
     - SnapKit (~> 5.0.0)
   - SnapKit (5.0.0)
 
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AGHUD: 5262283b99a1d66df02d938096a8c50fa38df480
+  AGHUD: 7e3e7cb418f1afb1a53384ac27b1774939979b39
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
 
 PODFILE CHECKSUM: 73ae0ac86f86a1a0423e5a3d0b436f3763c9f93a

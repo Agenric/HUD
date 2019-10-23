@@ -30,17 +30,7 @@ public class HUD: UIView {
         }
     }
     
-    private let activityImageView: UIImageView = {
-        let activity = UIImageView()
-        let myBundle = Bundle.init(path:Bundle.init(for: HUD.self).path(forResource: "HUD", ofType: "bundle")!)!
-        activity.image = UIImage.init(named: "hud_loading_routate_image@" + "\(UIScreen.main.scale > 2 ? "3x" : "2x")", in: myBundle, compatibleWith: nil)
-        let spring = CABasicAnimation.init(keyPath: "transform.rotation")
-        spring.byValue = NSNumber.init(value: 2 * Double.pi)
-        spring.repeatCount = MAXFLOAT
-        spring.duration = 1
-        activity.layer.add(spring, forKey: "startrefresh")
-        return activity
-    }()
+    private var loadingImage: UIImage?
     
     private let contentView: UIView = {
         let view = UIView()
@@ -66,10 +56,11 @@ public class HUD: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience fileprivate init(_ message_: String, type: HUDType, posi: HUDPosition) {
+    convenience fileprivate init(_ message_: String, image: UIImage?, type: HUDType, posi: HUDPosition) {
         self.init(frame: .zero)
         addSubview(contentView)
         contentView.addSubview(messageLabel)
+        loadingImage = image
         message = message_
         messageLabel.text = message_
         contentView.snp.makeConstraints { (make) in
@@ -85,17 +76,18 @@ public class HUD: UIView {
             make.width.lessThanOrEqualTo(UIScreen.main.bounds.width * 0.7)
         }
         if type == .loading {
-            contentView.addSubview(activityImageView)
-            activityImageView.snp.makeConstraints({ (make) in
+            let activity = generalActivityView()
+            contentView.addSubview(activity.0)
+            activity.0.snp.makeConstraints({ (make) in
                 make.left.equalTo(15)
                 make.centerY.equalToSuperview()
-                make.size.equalTo(CGSize(width: 30, height: 30))
+                make.size.equalTo(activity.1)
                 make.top.greaterThanOrEqualToSuperview().offset(10)
                 make.bottom.lessThanOrEqualToSuperview().offset(-10)
             })
             
             messageLabel.snp.makeConstraints({ (make) in
-                make.left.equalTo(activityImageView.snp.right).offset(5)
+                make.left.equalTo(activity.0.snp.right).offset(5)
                 make.right.equalTo(-15)
                 make.centerY.equalToSuperview()
                 make.top.greaterThanOrEqualToSuperview().offset(10)
@@ -108,7 +100,7 @@ public class HUD: UIView {
         }
     }
     
-    // Private
+    //MARK: Private
     private class func hasHUDDisplaying(in view: UIView) -> Bool {
         var flag = false
         view.subviews.forEach { (sub) in
@@ -126,8 +118,29 @@ public class HUD: UIView {
         }
     }
     
+    private func generalActivityView() -> (UIView, CGSize) {
+        if let loadingImage = loadingImage {
+            let activity = UIImageView(image: loadingImage)
+            let spring = CABasicAnimation.init(keyPath: "transform.rotation")
+            spring.byValue = NSNumber.init(value: 2 * Double.pi)
+            spring.repeatCount = MAXFLOAT
+            spring.duration = 1
+            activity.layer.add(spring, forKey: "startrefresh")
+            return (activity, loadingImage.size)
+        } else {
+            let activity = UIActivityIndicatorView()
+            if #available(iOS 13.0, *) {
+                activity.style = .medium
+            } else {
+                activity.style = .white
+            }
+            activity.startAnimating()
+            return (activity, CGSize(width: 30,height: 30))
+        }
+    }
     
-    // Toast
+    
+    //MARK: Toast
     
     /// 弹出即时消息提示框
     ///
@@ -143,7 +156,7 @@ public class HUD: UIView {
         if hasHUDDisplaying(in: view) {
             return nil
         }
-        let hud = HUD.init(message, type: .toast, posi: position)
+        let hud = HUD.init(message, image: nil, type: .toast, posi: position)
         hud.show(in: view)
         hud.contentView.alpha = 0
         UIView.animate(withDuration: 0.3) {
@@ -156,7 +169,7 @@ public class HUD: UIView {
     }
     
     
-    // Loading
+    //MARK: Loading
     
     /// 弹出持续消息提示框
     ///
@@ -166,11 +179,11 @@ public class HUD: UIView {
     ///   - position: 显示的位置：默认居中显示在目标view上
     ///   - ready: 开始显示之后的回调
     /// - Returns: 如果当前有正在显示的HUD，会返回nil
-    public static func showLoading(_ message: String, in view: UIView = UIWindow.keyWindow(), position: HUDPosition = .center, ready: ((_ hud: HUD?) -> Void)?) -> HUD? {
+    public static func showLoading(_ message: String, image: UIImage? = nil, in view: UIView = UIWindow.keyWindow(), position: HUDPosition = .center, ready: ((_ hud: HUD?) -> Void)?) -> HUD? {
         if hasHUDDisplaying(in: view) {
             return nil
         }
-        let hud = HUD.init(message, type: .loading, posi: position)
+        let hud = HUD.init(message, image: image, type: .loading, posi: position)
         hud.show(in: view)
         ready?(hud)
         hud.contentView.alpha = 0
@@ -181,7 +194,7 @@ public class HUD: UIView {
     }
     
     
-    // Hide
+    //MARK: Hide
     public func hide(_ completion: (() -> Void)?) {
         UIView.animate(withDuration: 0.3, animations: {
             self.contentView.alpha = 0

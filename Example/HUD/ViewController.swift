@@ -48,5 +48,17 @@ class ViewController: UIViewController {
         }
         
     }
+    
+    @IBAction func LoadingCustom(_ sender: Any) {
+        let hud = HUD.showLoading("Loading", image: UIImage.init(named: "hud_image")) { (hud) in
+            print("show complete")
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            hud?.hide({
+                print("dismiss complete")
+            })
+        }
+    }
 }
 

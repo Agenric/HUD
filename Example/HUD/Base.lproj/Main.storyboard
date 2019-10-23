@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,17 +20,24 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QE6-1b-WLc">
-                                <rect key="frame" x="168" y="80" width="38" height="30"/>
+                                <rect key="frame" x="168.5" y="60" width="38" height="30"/>
                                 <state key="normal" title="Toast"/>
                                 <connections>
                                     <action selector="Toast:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="AL7-WL-dEb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQB-oV-80p">
-                                <rect key="frame" x="160" y="135" width="55" height="30"/>
+                                <rect key="frame" x="160" y="115" width="55" height="30"/>
                                 <state key="normal" title="Loading"/>
                                 <connections>
                                     <action selector="Loading:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="zKf-1M-VHD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqA-GR-fay">
+                                <rect key="frame" x="131.5" y="170" width="112" height="30"/>
+                                <state key="normal" title="Loading Custom"/>
+                                <connections>
+                                    <action selector="LoadingCustom:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="hE1-88-sdM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -40,13 +45,16 @@
                         <constraints>
                             <constraint firstItem="QE6-1b-WLc" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="60" id="9Gs-eh-KdX"/>
                             <constraint firstItem="QE6-1b-WLc" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="cDK-R9-qlz"/>
+                            <constraint firstItem="hqA-GR-fay" firstAttribute="top" secondItem="IQB-oV-80p" secondAttribute="bottom" constant="25" id="eCo-Ae-GGX"/>
                             <constraint firstItem="IQB-oV-80p" firstAttribute="top" secondItem="QE6-1b-WLc" secondAttribute="bottom" constant="25" id="nze-YD-TxE"/>
+                            <constraint firstItem="hqA-GR-fay" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="sCZ-th-1gf"/>
                             <constraint firstItem="IQB-oV-80p" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="zep-iw-E33"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="132" y="133"/>
         </scene>
     </scenes>
 </document>

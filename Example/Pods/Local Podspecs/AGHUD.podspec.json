@@ -1,6 +1,6 @@
 {
   "name": "AGHUD",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "summary": "An iOS activity indicator and toast view.",
   "description": "An iOS activity indicator and toast view. Like Loading and Toast.",
   "homepage": "https://github.com/Agenric/HUD",
@@ -13,21 +13,16 @@
   },
   "source": {
     "git": "https://github.com/Agenric/HUD.git",
-    "tag": "1.0.0"
+    "tag": "1.1.0"
   },
   "platforms": {
     "ios": "10.0"
   },
   "swift_version": "5.0",
   "source_files": [
-    "HUD/Classes/HUD.swift",
-    "HUD/Classes/HUDExtension.swift"
+    "HUD/HUD.swift",
+    "HUD/HUDExtension.swift"
   ],
-  "resource_bundles": {
-    "HUD": [
-      "HUD/Assets/*.png"
-    ]
-  },
   "frameworks": [
     "UIKit",
     "Foundation"
