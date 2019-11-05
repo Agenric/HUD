@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'AGHUD'
-  s.version          = '1.1.0'
+  s.version          = '1.2.0'
   s.summary          = 'An iOS activity indicator and toast view.'
   s.description      = <<-DESC
   An iOS activity indicator and toast view. Like Loading and Toast.

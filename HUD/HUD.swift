@@ -34,7 +34,17 @@ public class HUD: UIView {
     
     private let contentView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.color(withHex: 0x191d21, alpha: 0.85)
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = UIColor { (trainCollection) -> UIColor in
+                if trainCollection.userInterfaceStyle == .dark {
+                    return .color(withHex: 0xffffff, alpha: 0.85)
+                } else {
+                    return .color(withHex: 0x191d21, alpha: 0.85)
+                }
+            }
+        } else {
+            view.backgroundColor = .color(withHex: 0x191d21)
+        }
         view.clipsToBounds = true
         view.layer.cornerRadius = 4
         return view
@@ -42,7 +52,17 @@ public class HUD: UIView {
     
     private let messageLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.color(withHex: 0xffffff)
+        if #available(iOS 13.0, *) {
+            label.textColor = UIColor { (trainCollection) -> UIColor in
+                if trainCollection.userInterfaceStyle == .dark {
+                    return .black
+                } else {
+                    return .white
+                }
+            }
+        } else {
+            label.textColor = .white
+        }
         label.font = .semiboldSystemFont(ofSize: 15)
         label.numberOfLines =  0
         return label
@@ -131,8 +151,16 @@ public class HUD: UIView {
             let activity = UIActivityIndicatorView()
             if #available(iOS 13.0, *) {
                 activity.style = .medium
+                activity.color = UIColor { (trainCollection) -> UIColor in
+                    if trainCollection.userInterfaceStyle == .dark {
+                        return .black
+                    } else {
+                        return .white
+                    }
+                }
             } else {
                 activity.style = .white
+                activity.color = .white
             }
             activity.startAnimating()
             return (activity, CGSize(width: 30,height: 30))
